@@ -1,3 +1,5 @@
+document.getElementById("zapisz").addEventListener("click", zapiszDane);
+
 function zapiszDane() {
   set(ref(db, "gracze/user123"), {
     nick: "Gracz123",
@@ -10,6 +12,6 @@ function zapiszDane() {
   });
 }
 
-document.getElementById("zapisz").addEventListener("click", zapiszDane);
+
 
 addEventListener;
