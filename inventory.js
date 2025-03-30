@@ -3,6 +3,7 @@ const items = {
     "Sword": "./sword.jpg",
     "Potion": "./potion.png",
     "Shield": "./shield.jpg"
+    
 };
 
 
@@ -110,16 +111,16 @@ function addItemToInventory(itemName, quantityToAdd) {
 
 // Funkcja, która doda kilka różnych przedmiotów na raz
 function cos() {
-    addItemToInventory("Sword", 2, true);   // Dodaje 2 miecze
-    addItemToInventory("Potion", 999, true); // Dodaje 999 mikstur
-    addItemToInventory("Shield", 55, true);  // Dodaje 55 tarczy
+    addItemToInventory("Sword", 1);   // Dodaje 2 miecze
+    addItemToInventory("Potion", 999); // Dodaje 999 mikstur
+    addItemToInventory("Shield", 55);  // Dodaje 55 tarczy
     
     
 }
 function tam(){
-    addItemToInventory("Sword", -2, true);   // Dodaje 2 miecze
-    addItemToInventory("Potion", -111, true); // Dodaje 999 mikstur
-    addItemToInventory("Shield", -2, true);  // Dodaje 55 tarczy
+    addItemToInventory("Sword", -2);   // Dodaje 2 miecze
+    addItemToInventory("Potion", -111); // Dodaje 999 mikstur
+    addItemToInventory("Shield", -2);  // Dodaje 55 tarczy
     
     
 }
