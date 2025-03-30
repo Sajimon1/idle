@@ -9,11 +9,7 @@
     padding: 0;
     }
 
-#game-container-left {
-    /* background-color: brown; */
-    min-width: 20vw;
-    color:white;
-}
+
 #game-container-middle {
     /* background-color: black; */
     min-width: 55vw;
@@ -28,4 +24,7 @@
     align-items:end;
     background-color: green;
 }
+
+
+
 

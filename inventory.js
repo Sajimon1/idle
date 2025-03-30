@@ -1,3 +1,31 @@
+// Funkcja do dynamicznego generowania slotów w ekwipunku
+function createInventorySlots(slotCount) {
+    const inventory = document.getElementById('inventory');
+    for (let i = 1; i <= slotCount; i++) {
+        const slot = document.createElement('div');
+        slot.className = 'inv-slot';
+        slot.id = `inv-slot${i}`;
+
+        const img = document.createElement('img');
+        img.className = 'item-img';
+        img.src = '';
+        img.alt = '';
+
+        const quantity = document.createElement('span');
+        quantity.className = 'item-quantity';
+        quantity.textContent = '0';
+
+        slot.appendChild(img);
+        slot.appendChild(quantity);
+        inventory.appendChild(slot);
+    }
+}
+
+// Wywołanie przy ładowaniu strony
+window.onload = function() {
+    createInventorySlots(120); // Tworzy 120 slotów
+};
+
 // Przykładowe dane przedmiotów z obrazkami
 const items = {
     "Sword": "./sword.jpg",
@@ -41,7 +69,6 @@ function shiftSlots() {
     }
 }
 
-// Funkcja dodająca przedmioty do ekwipunku
 function addItemToInventory(itemName, quantityToAdd) {
     const slots = document.querySelectorAll('.inv-slot');
     let itemAdded = false;
@@ -109,21 +136,147 @@ function addItemToInventory(itemName, quantityToAdd) {
     shiftSlots();
 }
 
+
+document.getElementById("game-container-middle").addEventListener("click", cos);
+document.getElementById("game-container-left").addEventListener("click", tam);
+
+
+
+
+
+
+
+
+/////////////////////////
+
+
+
+
+// Funkcja zapisywania ekwipunku z Firebase z usuwaniem przedmiotów o quantity 0
+async function saveInventory() {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const slots = document.querySelectorAll('.inv-slot');
+    const inventory = {};
+
+    slots.forEach((slot, index) => {
+        const item = slot.dataset.item;
+        const quantity = parseInt(slot.dataset.quantity) || 0;
+
+        if (quantity > 0) {
+            // Przedmiot z ilością większą niż 0 - zapisujemy go do ekwipunku
+            inventory[index] = { item, quantity };
+        } else {
+            // Jeśli ilość jest 0, usuwamy przedmiot z bazy danych
+            const itemRef = ref(db, `users/${user.uid}/inventory/${index}`);
+            set(itemRef, null);  // Usuwamy przedmiot z bazy
+        }
+    });
+
+    try {
+        // Zapisz przedmioty do Firebase
+        await set(ref(db, `users/${user.uid}/inventory`), inventory);
+        console.log("Ekwipunek zapisany do Firebase");
+    } catch (error) {
+        console.error("Błąd zapisu ekwipunku:", error);
+    }
+}
+
+
+// 💾 Wczytywanie ekwipunku z Firebase
+async function loadInventory() {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+        const snapshot = await get(ref(db, `users/${user.uid}/inventory`));
+        if (snapshot.exists()) {
+            const inventory = snapshot.val();
+            Object.keys(inventory).forEach((key) => {
+                const slot = document.getElementById(`inv-slot${parseInt(key) + 1}`);
+                const { item, quantity } = inventory[key];
+                slot.dataset.item = item;
+                slot.dataset.quantity = quantity;
+
+                const img = slot.querySelector('.item-img');
+                img.src = items[item];
+                img.alt = item;
+                img.style.display = 'block';
+
+                const quantityLabel = slot.querySelector('.item-quantity');
+                quantityLabel.textContent = quantity;
+                quantityLabel.style.display = quantity > 0 ? 'block' : 'none';
+            });
+            console.log("Ekwipunek załadowany z Firebase");
+        }
+    } catch (error) {
+        console.error("Błąd wczytywania ekwipunku:", error);
+    }
+}
+
+export { addItemToInventory, loadInventory, createInventorySlots };
+
+
 // Funkcja, która doda kilka różnych przedmiotów na raz
 function cos() {
     addItemToInventory("Sword", 1);   // Dodaje 2 miecze
     addItemToInventory("Potion", 999); // Dodaje 999 mikstur
     addItemToInventory("Shield", 55);  // Dodaje 55 tarczy
-    
+    saveAndCleanupInventory();
     
 }
 function tam(){
     addItemToInventory("Sword", -2);   // Dodaje 2 miecze
     addItemToInventory("Potion", -111); // Dodaje 999 mikstur
     addItemToInventory("Shield", -2);  // Dodaje 55 tarczy
-    
+    saveAndCleanupInventory(); 
     
 }
 
-document.getElementById("game-container-middle").addEventListener("click", cos);
-document.getElementById("game-container-left").addEventListener("click", tam);
+
+
+
+///////////////////
+
+
+// 🔥 Import Firebase
+import { app, auth, db } from "./database.js";
+import { ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// 🧹 Funkcja do czyszczenia ekwipunku w Firebase z zerowych przedmiotów
+async function cleanupInventory() {
+    const user = auth.currentUser;
+    if (!user) return;
+    const userId = user.uid;
+
+    try {
+        // Pobierz cały ekwipunek użytkownika
+        const snapshot = await get(ref(db, `users/${userId}/inventory`));
+        if (snapshot.exists()) {
+            const inventory = snapshot.val();
+
+            for (const [key, { item, quantity }] of Object.entries(inventory)) {
+                // Usuń przedmiot z Firebase, jeśli ilość wynosi 0
+                if (quantity <= 0) {
+                    await set(ref(db, `users/${userId}/inventory/${key}`), null);
+                    console.log(`Przedmiot ${item} o ilości 0 został usunięty z Firebase`);
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Błąd czyszczenia ekwipunku:", error);
+    }
+}
+
+// 💾 Zapisz ekwipunek i wyczyść zerowe przedmioty
+async function saveAndCleanupInventory() {
+    await saveInventory();
+    await cleanupInventory();
+}
+
+// Eksport funkcji
+export { cleanupInventory, saveAndCleanupInventory };
+
+/////////
+

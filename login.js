@@ -1,3 +1,6 @@
+// Import Firebase SDK
+import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
 
 // 🔥 Import instancje Firebase z database.js
 import { app, auth, db } from "./database.js";
@@ -7,6 +10,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+
+import { loadInventory } from "./inventory.js";
 // 🔹 Funkcja logowania przez Google
 function loginWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -35,6 +40,8 @@ async function checkIfUserHasNickname(user) {
         document.getElementById("google-login").style.display = "none";
         document.getElementById("nickname-form").style.display = "none";
         showGameContainer();
+        document.getElementById("game-container-left-nickname").innerText = snapshot.val();
+        loadInventory(); // Wczytaj ekwipunek po zalogowaniu
     } else {
         console.log("Brak nicku – użytkownik musi go podać.");
         showNicknameForm(user);
@@ -85,3 +92,28 @@ function showGameContainer() {
 // 🔹 Event Listenery
 document.getElementById("google-login").addEventListener("click", loginWithGoogle);
 document.getElementById("save-nickname").addEventListener("click", saveNickname);
+
+
+function logout() {
+    
+    signOut(auth)
+        .then(() => {
+            console.log("Wylogowano pomyślnie.");
+            document.getElementById("status").innerText = "Wylogowano";
+            document.getElementById("google-login").style.display = "block";
+            document.getElementById("nickname-form").style.display = "none";
+            document.getElementById("game-container").style.display = "none";
+            document.getElementById("login-background").style.display = "flex";
+        })
+        .catch((error) => {
+            console.error("Błąd wylogowania:", error);
+        });
+}
+
+// Event Listener do przycisku wylogowania
+document.getElementById("logout-button").addEventListener("click", logout);
+
+
+
+
+
