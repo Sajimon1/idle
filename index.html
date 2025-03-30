@@ -4,25 +4,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moja Gra Idle</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="inventory.css">
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
 </head>
 <body>
 
+<div id="login-background">
+    <!-- Login container, znika po zalogowaniu -->
     <div id="login-container">
         <h1 id="login-container-game-name">Souldle</h1>
     <button id="google-login">Zaloguj się przez Google</button>
-    </div>
-
     <!-- Formularz do ustawienia nicku (początkowo ukryty) -->
     <div id="nickname-form" style="display:none;">
         <h2>Wybierz swój nick</h2>
         <input type="text" id="nickname" placeholder="Wpisz swój nick" required>
         <button id="save-nickname">Zapisz nick</button>
     </div>
-
     <p id="status"></p>
+    </div>
+</div>
 
+    
+        
+        <div id="game-container">
+            
+            <div id="game-container-left">
+
+            </div>
+
+            <div id="game-container-middle">
+
+                <div id="item-details" style="display: none;">
+                    <h2 id="item-name"></h2>
+                    <img id="item-image" src="" alt="" />
+                    <p id="item-description"></p>
+                    <div id="item-stats"></div>
+                </div>
+                
+            </div>
+
+            <div id="game-container-right">
+                <div id="inventory">
+                    <div class="inv-slot" id="inv-slot1">
+                        <img class="item-img" src="" alt="">
+                        <span class="item-quantity">0</span> <!-- Ilość przedmiotu -->
+                    </div>
+                    <div class="inv-slot" id="inv-slot2">
+                        <img class="item-img" src="" alt="">
+                        <span class="item-quantity" >0</span>
+                    </div>
+                    <div class="inv-slot" id="inv-slot3">
+                        <img class="item-img" src="" alt="">
+                        <span class="item-quantity">0</span>
+                    </div>
+                    <!-- Dodanie kolejnych slotów -->
+                    <div class="inv-slot" id="inv-slot4"></div>
+                    <div class="inv-slot" id="inv-slot5"></div>
+                    <div class="inv-slot" id="inv-slot6"></div>
+                    <div class="inv-slot" id="inv-slot7"></div>
+                    <div class="inv-slot" id="inv-slot8"></div>
+                    <div class="inv-slot" id="inv-slot9"></div>
+                    <div class="inv-slot" id="inv-slot10"></div>
+                    <div class="inv-slot" id="inv-slot11"></div>
+                    <div class="inv-slot" id="inv-slot12"></div>
+                    <div class="inv-slot" id="inv-slot13"></div>
+                    <div class="inv-slot" id="inv-slot14"></div>
+                    <div class="inv-slot" id="inv-slot15"></div>
+                    <div class="inv-slot" id="inv-slot16"></div>
+                    <div class="inv-slot" id="inv-slot17"></div>
+                    <div class="inv-slot" id="inv-slot18"></div>
+                    <div class="inv-slot" id="inv-slot19"></div>
+                    <div class="inv-slot" id="inv-slot20"></div>
+                    <div class="inv-slot" id="inv-slot21"></div>
+                    <div class="inv-slot" id="inv-slot22"></div>
+                    <div class="inv-slot" id="inv-slot23"></div>
+                    <div class="inv-slot" id="inv-slot24"></div>
+                    <div class="inv-slot" id="inv-slot25"></div>
+                    <div class="inv-slot" id="inv-slot26"></div>
+                    <div class="inv-slot" id="inv-slot27"></div>
+                    <div class="inv-slot" id="inv-slot28"></div>
+                    <div class="inv-slot" id="inv-slot29"></div>
+                    <div class="inv-slot" id="inv-slot30"></div>
+                    <div class="inv-slot" id="inv-slot31"></div>
+                    <div class="inv-slot" id="inv-slot32"></div>
+                    <div class="inv-slot" id="inv-slot33"></div>
+                    <div class="inv-slot" id="inv-slot34"></div>
+                    <div class="inv-slot" id="inv-slot35"></div>
+                    <div class="inv-slot" id="inv-slot36"></div>
+                    <div class="inv-slot" id="inv-slot37"></div>
+                    <div class="inv-slot" id="inv-slot38"></div>
+                    <div class="inv-slot" id="inv-slot39"></div>
+                    <div class="inv-slot" id="inv-slot40"></div>
+                    <div class="inv-slot" id="inv-slot41"></div>
+                    <div class="inv-slot" id="inv-slot42"></div>
+                    <div class="inv-slot" id="inv-slot43"></div>
+                    <div class="inv-slot" id="inv-slot44"></div>
+                    <div class="inv-slot" id="inv-slot45"></div>
+                    <div class="inv-slot" id="inv-slot46"></div>
+                    <div class="inv-slot" id="inv-slot47"></div>
+                    <div class="inv-slot" id="inv-slot48"></div>
+                    <div class="inv-slot" id="inv-slot49"></div>
+                    <div class="inv-slot" id="inv-slot50"></div>
+                    <div class="inv-slot" id="inv-slot51"></div>
+                    <div class="inv-slot" id="inv-slot52"></div>
+                    <div class="inv-slot" id="inv-slot53"></div>
+                    <div class="inv-slot" id="inv-slot54"></div>
+                    <div class="inv-slot" id="inv-slot55"></div>
+                    <div class="inv-slot" id="inv-slot56"></div>
+                    <div class="inv-slot" id="inv-slot57"></div>
+                    <div class="inv-slot" id="inv-slot58"></div>
+                    <div class="inv-slot" id="inv-slot59"></div>
+                    <div class="inv-slot" id="inv-slot60"></div>
+                    <div class="inv-slot" id="inv-slot61"></div>
+                    <div class="inv-slot" id="inv-slot62"></div>
+                    <div class="inv-slot" id="inv-slot63"></div>
+                    <div class="inv-slot" id="inv-slot64"></div>
+                    <div class="inv-slot" id="inv-slot65"></div>
+                    <div class="inv-slot" id="inv-slot66"></div>
+                    <div class="inv-slot" id="inv-slot67"></div>
+                    <div class="inv-slot" id="inv-slot68"></div>
+                    <div class="inv-slot" id="inv-slot69"></div>
+                    <div class="inv-slot" id="inv-slot70"></div>
+                    <div class="inv-slot" id="inv-slot71"></div>
+                    <div class="inv-slot" id="inv-slot72"></div>
+                    <div class="inv-slot" id="inv-slot73"></div>
+                    <div class="inv-slot" id="inv-slot74"></div>
+                    <div class="inv-slot" id="inv-slot75"></div>
+                    <div class="inv-slot" id="inv-slot76"></div>
+                    <div class="inv-slot" id="inv-slot77"></div>
+                    <div class="inv-slot" id="inv-slot78"></div>
+                    <div class="inv-slot" id="inv-slot79"></div>
+                    <div class="inv-slot" id="inv-slot80"></div>
+                    <div class="inv-slot" id="inv-slot81"></div>
+                    <div class="inv-slot" id="inv-slot82"></div>
+                    <div class="inv-slot" id="inv-slot83"></div>
+                    <div class="inv-slot" id="inv-slot84"></div>
+                    <div class="inv-slot" id="inv-slot85"></div>
+                    <div class="inv-slot" id="inv-slot86"></div>
+                    <div class="inv-slot" id="inv-slot87"></div>
+                    <div class="inv-slot" id="inv-slot88"></div>
+                    <div class="inv-slot" id="inv-slot89"></div>
+                    <div class="inv-slot" id="inv-slot90"></div>
+                    <div class="inv-slot" id="inv-slot91"></div>
+                    <div class="inv-slot" id="inv-slot92"></div>
+                    <div class="inv-slot" id="inv-slot93"></div>
+                    <div class="inv-slot" id="inv-slot94"></div>
+                    <div class="inv-slot" id="inv-slot95"></div>
+                    <div class="inv-slot" id="inv-slot96"></div>
+                    <div class="inv-slot" id="inv-slot97"></div>
+                    <div class="inv-slot" id="inv-slot98"></div>
+                    <div class="inv-slot" id="inv-slot99"></div>
+                    <div class="inv-slot" id="inv-slot100"></div>
+                    <div class="inv-slot" id="inv-slot101"></div>
+                    <div class="inv-slot" id="inv-slot102"></div>
+                    <div class="inv-slot" id="inv-slot103"></div>
+                    <div class="inv-slot" id="inv-slot104"></div>
+                    <div class="inv-slot" id="inv-slot105"></div>
+                    <div class="inv-slot" id="inv-slot106"></div>
+                    <div class="inv-slot" id="inv-slot107"></div>
+                    <div class="inv-slot" id="inv-slot108"></div>
+                    <div class="inv-slot" id="inv-slot109"></div>
+                    <div class="inv-slot" id="inv-slot110"></div>
+   
+                    
+
+                    
+                </div>
+            </div> 
+
+        </div> 
+        
+
+    
+
+   
+
+        <script type="module" src="inventory.js"></script>
     <script type="module" src="login.js"></script>
     <script type="module" src="database.js"></script>
 </body>

@@ -34,6 +34,7 @@ async function checkIfUserHasNickname(user) {
         document.getElementById("status").innerText = `Zalogowano jako: ${snapshot.val()}`;
         document.getElementById("google-login").style.display = "none";
         document.getElementById("nickname-form").style.display = "none";
+        showGameContainer();
     } else {
         console.log("Brak nicku – użytkownik musi go podać.");
         showNicknameForm(user);
@@ -60,15 +61,26 @@ async function saveNickname() {
         try {
             await set(ref(db, `users/${user.uid}/nickname`), nickname);
 
-            document.getElementById("status").innerText = `Nick zapisany: ${nickname}`;
+            document.getElementById("status").innerText = `Nick: ${nickname}`;
             document.getElementById("nickname-form").style.display = "none";
             console.log("Nick zapisany w Realtime Database");
+            showGameContainer();
         } catch (error) {
             console.error("Błąd zapisywania nicku:", error);
             document.getElementById("status").innerText = `Błąd zapisu: ${error.message}`;
         }
     }
 }
+
+function showGameContainer() {
+    document.getElementById("game-container").style.display = "flex";
+    document.getElementById("login-background").style.display = "none";
+}
+
+
+
+
+
 
 // 🔹 Event Listenery
 document.getElementById("google-login").addEventListener("click", loginWithGoogle);
